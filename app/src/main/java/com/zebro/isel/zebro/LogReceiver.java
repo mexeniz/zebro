@@ -19,6 +19,7 @@ public class LogReceiver extends Thread {
     int port ;
 
     public LogReceiver (MapsActivity mapsActivity,int port , String myIP){
+        Log.i("Map" , "CREATED LOG RECEIVER");
         try{
             this.mapsActivity = mapsActivity ;
             this.myIP = InetAddress.getByName(myIP);

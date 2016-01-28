@@ -18,10 +18,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LogReceiver logReceiver ;
 
     protected void updateNodeLocation(String gpsStream){
-        Log.i("Map" , "Update Node Location "+ gpsStream);
+        //Log.i("Map" , "Update Node Location "+ gpsStream);
+        System.out.println("Update Node Location "+ gpsStream);
     }
     protected void init(){
-        logReceiver = new LogReceiver(this , 8888 , "192.168.10.83" );
+        logReceiver = new LogReceiver(this , 8888 , "192.168.10.32" );
+        logReceiver.start();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
