@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getActiveNetworkInfo();
 
-        if (mWifi.isConnected()) {
+        if (mWifi != null && mWifi.isConnected()) {
             final ProgressDialog progress;
             progress = ProgressDialog.show(this,"Connecting","Please wait..." ,true);
 
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             t.start();
         }else{
             Toast.makeText(MainActivity.this, "Please connect to WiFi before start app.", Toast.LENGTH_SHORT).show();
+            isShook = false ;
         }
 
     }
