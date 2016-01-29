@@ -1,8 +1,15 @@
 package com.zebro.isel.zebro;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +19,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteOrder;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -19,9 +31,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected void updateNodeLocation(String gpsStream){
         Log.i("Map" , "Update Node Location "+ gpsStream);
+        Toast.makeText(MapsActivity.this, gpsStream.trim().toString(), Toast.LENGTH_SHORT).show();
     }
+
     protected void init(){
-        logReceiver = new LogReceiver(this , 8888 , "192.168.10.83" );
+
+        WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+        int ipAddress = wifiInfo.getIpAddress();
+
+        //Convert IpAddress to String
+        // Convert little-endian to big-endianif needed
+        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+            ipAddress = Integer.reverseBytes(ipAddress);
+        }
+        byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+
+        String ipAddressString;
+        try {
+            ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+        } catch (UnknownHostException ex) {
+            Log.e("WIFIIP", "Unable to get host address.");
+            ipAddressString = null;
+        }
+        logReceiver = new LogReceiver(this , 8888 , ipAddressString );
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

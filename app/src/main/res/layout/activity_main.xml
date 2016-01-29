@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zebr.isel.zebro.MainActivity"
     android:background="@drawable/background"
-    android:id="@+id/titleScreen">
+    android:id="@+id/titleScreen"
+    android:backgroundTint="#46000000"
+    android:backgroundTintMode="src_over">
 
     <TextView
         android:layout_width="fill_parent"
@@ -31,25 +34,77 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp" />
 
-    <Button
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/walkFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start App"
-        android:id="@+id/startButton"
-        android:background="#003d3d3d"
-        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:src="@drawable/ic_walk"
+        android:onClick="onWalkClicked"
+        app:backgroundTint="#4DAF4E"
+        app:fabSize="normal"
+        android:layout_below="@+id/title"
+        android:layout_alignEnd="@+id/logo2"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:alpha="0"
+        android:visibility="invisible" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/carFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_car"
+        android:onClick="onCarClicked"
+        app:backgroundTint="#3F51B5"
+        app:fabSize="normal"
+        android:layout_below="@+id/title"
+        android:layout_alignStart="@+id/logo2"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:alpha="0"
+        android:background="#00ffffff"
+        android:visibility="invisible" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/infoButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="false"
+        android:onClick="onInfoClicked"
+        android:src="@drawable/info"
+        android:background="#00ffffff"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="ISEL Lab inc."
+        android:id="@+id/textView"
+        android:textStyle="bold"
+        android:textSize="12dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:onClick="onStartClicked"
-        android:textSize="18dp" />
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:textIsSelectable="false" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#ffffff"
         android:id="@+id/welcomeScreen"
-        android:layout_alignParentBottom="true"
-        android:visibility="visible">
+        android:layout_alignParentTop="false"
+        android:layout_toEndOf="@+id/logo2"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -73,19 +128,6 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="46dp"
             android:layout_below="@+id/logo1" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="ISEL Lab inc."
-            android:id="@+id/textView"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="85dp"
-            android:textAlignment="center"
-            android:textColor="#000000" />
 
     </RelativeLayout>
 
