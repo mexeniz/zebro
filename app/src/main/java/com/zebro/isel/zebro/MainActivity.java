@@ -31,9 +31,10 @@ import static com.zebro.isel.zebro.R.drawable.background;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final int SET_IP_ADDRESS = 0 ;
+
     private RelativeLayout welcomeScreen;
     private RelativeLayout titleScreen;
-    private LinearLayout settingScreen;
 
     private FloatingActionButton walkFab;
     private FloatingActionButton carFab;
@@ -46,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
-    // Fab animation parameter
+    //DENSO WSU IP Address
+    protected String densoIpAddress = "192.168.10.77";
 
+    // Fab animation parameter
     protected int showFabDuration = 1000 ;
     protected float startScale = 0.0f ;
     protected float zoomScale = 1.5f ;
@@ -81,41 +84,18 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onSettingClicked(View view){
         Log.i("Setting Button", "Clicked!");
-        if(!settingScreen.isShown()) {
-            settingScreen.setVisibility(View.VISIBLE);
-            settingScreen.animate().translationY(-40.0f).setDuration(1500);
-            settingScreen.animate().alpha(1.0f).setDuration(1500);
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        intent.putExtra("densoIpAddress",densoIpAddress);
+        startActivityForResult(intent, SET_IP_ADDRESS);
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("Result","Request:"+requestCode+" DATA:"+data.getStringExtra("densoIpAddress"));
+        if (requestCode == SET_IP_ADDRESS) {
+            if (resultCode == RESULT_OK) {
+                densoIpAddress = data.getStringExtra("densoIpAddress") ;
+            }
         }
     }
-    public void onCloseClicked(View view) {
-        Log.i("Close Button", "Clicked!");
-        if(settingScreen.isShown()) {
-            settingScreen.animate().translationY(40.0f).setDuration(1500);
-            settingScreen.animate().alpha(0.0f).setDuration(1500).setListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    settingScreen.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-        }
-    }
-
-
     public void startApp(String mode) {
         Log.i("Main", "Starting App in" + mode);
         WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
@@ -131,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
 
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    intent.putExtra("densoIpAddress",densoIpAddress);
+
+
                     // Open Connection...
                     try {
                         //Receive Message From DENSO
@@ -158,8 +141,6 @@ public class MainActivity extends AppCompatActivity {
         walkFab = (FloatingActionButton) findViewById(R.id.walkFab);
         carFab = (FloatingActionButton) findViewById(R.id.carFab);
         titleText = (TextView) findViewById(R.id.title);
-
-        settingScreen = (LinearLayout) findViewById(R.id.settingScreen);
 
         // Notification initialization
         notification = new Notification(this.getApplicationContext());
