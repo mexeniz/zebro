@@ -54,7 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e("WIFIIP", "Unable to get host address.");
             ipAddressString = null;
         }
-        logReceiver = new LogReceiver(this , 8888 , ipAddressString );
+        logReceiver = new LogReceiver(this , 8888 , "192.168.1.39" );
+        logReceiver.start();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

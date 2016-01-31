@@ -8,6 +8,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout welcomeScreen;
     private RelativeLayout titleScreen;
+    private LinearLayout settingScreen;
 
     private FloatingActionButton walkFab;
     private FloatingActionButton carFab;
@@ -70,19 +74,54 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Car Fab", "Clicked!");
         startApp("Car");
     }
-
     public void onInfoClicked(View view) {
         Log.i("Info Button", "Clicked!");
         Intent intent = new Intent(MainActivity.this, PopActivity.class);
         startActivity(intent);
     }
+    public void onSettingClicked(View view){
+        Log.i("Setting Button", "Clicked!");
+        if(!settingScreen.isShown()) {
+            settingScreen.setVisibility(View.VISIBLE);
+            settingScreen.animate().translationY(-40.0f).setDuration(1500);
+            settingScreen.animate().alpha(1.0f).setDuration(1500);
+        }
+    }
+    public void onCloseClicked(View view) {
+        Log.i("Close Button", "Clicked!");
+        if(settingScreen.isShown()) {
+            settingScreen.animate().translationY(40.0f).setDuration(1500);
+            settingScreen.animate().alpha(0.0f).setDuration(1500).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    settingScreen.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+        }
+    }
+
 
     public void startApp(String mode) {
         Log.i("Main", "Starting App in" + mode);
-        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mWifi = connManager.getActiveNetworkInfo();
-
-        if (mWifi != null && mWifi.isConnected()) {
+        WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiInfo mWifi = wifiMgr.getConnectionInfo();
+        Log.i("Wifi",""+wifiMgr.isWifiEnabled());
+        if (mWifi != null && wifiMgr.isWifiEnabled()) {
             final ProgressDialog progress;
             progress = ProgressDialog.show(this, "Connecting in "+mode.toUpperCase()+" mode", "Please wait...", true);
 
@@ -119,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
         walkFab = (FloatingActionButton) findViewById(R.id.walkFab);
         carFab = (FloatingActionButton) findViewById(R.id.carFab);
         titleText = (TextView) findViewById(R.id.title);
+
+        settingScreen = (LinearLayout) findViewById(R.id.settingScreen);
 
         // Notification initialization
         notification = new Notification(this.getApplicationContext());

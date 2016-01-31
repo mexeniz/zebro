@@ -38,5 +38,6 @@
         android:id="@+id/imageButton"
         android:src="@drawable/places_ic_clear"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="#00ffffff" />
 </RelativeLayout>

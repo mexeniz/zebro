@@ -81,6 +81,18 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settingButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:onClick="onSettingClicked"
+        android:src="@drawable/setting"
+        android:background="#00ffffff"
+        android:layout_alignParentEnd="false"
+        android:layout_margin="10dp" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -97,6 +109,45 @@
         android:layout_marginBottom="10dp"
         android:textIsSelectable="false" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:id="@+id/settingScreen"
+        android:background="#727272"
+        android:layout_marginBottom="250dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:alpha="0"
+        android:visibility="invisible">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/closeButton"
+            android:src="@drawable/places_ic_clear"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right|top"
+            android:onClick="onCloseClicked" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DENSO WSU IP Address"
+            android:id="@+id/ipSettingText" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ipAddress"
+            android:singleLine="true"
+            android:text="192.168.10.77"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -104,7 +155,9 @@
         android:id="@+id/welcomeScreen"
         android:layout_alignParentTop="false"
         android:layout_toEndOf="@+id/logo2"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:visibility="visible"
+        android:alpha="1">
 
         <ImageView
             android:layout_width="wrap_content"
