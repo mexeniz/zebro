@@ -14,9 +14,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import static com.zebro.isel.zebro.R.drawable.background;
 
@@ -27,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton walkFab;
     private FloatingActionButton carFab;
-
+    private TextView titleText ;
     // Notification for vibration and sound
     private Notification notification;
 
@@ -66,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onInfoClicked(View view) {
-        Toast.makeText(MainActivity.this, "Show Info!", Toast.LENGTH_SHORT).show();
+        Log.i("Info Button", "Clicked!");
+        Intent intent = new Intent(MainActivity.this, PopActivity.class);
+        startActivity(intent);
     }
 
     public void startApp(String mode) {
@@ -110,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
     public void init() {
         walkFab = (FloatingActionButton) findViewById(R.id.walkFab);
         carFab = (FloatingActionButton) findViewById(R.id.carFab);
+        titleText = (TextView) findViewById(R.id.title);
 
         // Notification initialization
         notification = new Notification(this.getApplicationContext());
@@ -190,6 +199,29 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        //Add shaking animation
+        final Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        shake.setStartTime(2000);
+
+        walkFab.startAnimation(shake);
+        carFab.startAnimation(shake);
+
+        walkFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                walkFab.startAnimation(shake);
+                return false;
+            }
+        });
+        carFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                carFab.startAnimation(shake);
+                return false;
+            }
+        });
+
     }
 
     protected void welcomeAnimation() {
