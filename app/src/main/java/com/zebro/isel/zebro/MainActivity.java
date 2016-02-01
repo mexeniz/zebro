@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
@@ -165,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void showFab() {
+        //Set FAB Color
+        walkFab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4DAF4E")));
+        carFab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#3F51B5")));
 
         walkFab.setVisibility(View.VISIBLE);
         walkFab.setScaleX(startScale);

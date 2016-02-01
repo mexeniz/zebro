@@ -36,25 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected void init(){
 
-        WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-        int ipAddress = wifiInfo.getIpAddress();
-
-        //Convert IpAddress to String
-        // Convert little-endian to big-endianif needed
-        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
-            ipAddress = Integer.reverseBytes(ipAddress);
-        }
-        byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
-
-        String ipAddressString;
-        try {
-            ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
-        } catch (UnknownHostException ex) {
-            Log.e("WIFIIP", "Unable to get host address.");
-            ipAddressString = null;
-        }
-        logReceiver = new LogReceiver(this , 8888 , "192.168.1.39" );
+        logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") );
         logReceiver.start();
     }
     @Override
@@ -96,7 +78,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(r2d2);
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(isel)) ;
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(19.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(isel , 19.0f)) ;
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        finish();
     }
 }
