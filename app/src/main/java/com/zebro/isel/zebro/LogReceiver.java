@@ -15,7 +15,7 @@ import java.util.Map;
 public class LogReceiver extends Thread {
 
     private final int freq = 1; // request freq in Hz
-    private final int timeout = 10000;
+    private final int timeout = 1000;
 
     MapsActivity mapsActivity ;
 
@@ -36,7 +36,7 @@ public class LogReceiver extends Thread {
             targetPort = port ;
             clientSocket = new DatagramSocket();
             IPAddress = InetAddress.getByName(serverHostname);
-        }catch(Exception e){
+        }catch(Exception e) {
             System.out.println(e);
         }
     }
@@ -58,20 +58,20 @@ public class LogReceiver extends Thread {
                 clientSocket.setSoTimeout(timeout);
 
                 try {
-                     clientSocket.receive(receivePacket);
-                     String modifiedSentence = new String(receivePacket.getData());
+                    clientSocket.receive(receivePacket);
+                    String modifiedSentence = new String(receivePacket.getData());
 
-                     InetAddress returnIPAddress = receivePacket.getAddress();
+                    InetAddress returnIPAddress = receivePacket.getAddress();
 
-                     int port = receivePacket.getPort();
+                    int port = receivePacket.getPort();
 
-                     System.out.println ("From server at: " + returnIPAddress + ":" + port);
-                    mapsActivity.updateNodeLocation(modifiedSentence);
+                    System.out.println ("From server at: " + returnIPAddress + ":" + port);
+                    System.out.println("Message: " + modifiedSentence);
 
-                    }
+                }
                 catch (Exception ste)
-                    {
-                     System.out.println ("Timeout Occurred: Packet assumed lost");
+                {
+                    System.out.println ("Timeout Occurred: Packet assumed lost");
                 }
 
                 Thread.sleep(1000/freq);
@@ -91,11 +91,7 @@ public class LogReceiver extends Thread {
     int port ;
 
     public LogReceiver (MapsActivity mapsActivity,int port , String myIP){
-<<<<<<< HEAD
-        Log.d("Log Receiver" , "Create socket ip="+myIP+" port="+port);
-=======
         Log.i("Map" , "CREATED LOG RECEIVER");
->>>>>>> origin/Ta
         try{
             this.mapsActivity = mapsActivity ;
             this.myIP = InetAddress.getByName(myIP);
