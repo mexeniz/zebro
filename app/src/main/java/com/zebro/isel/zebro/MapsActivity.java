@@ -22,7 +22,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println("Update Node Location "+ gpsStream);
     }
     protected void init(){
-        logReceiver = new LogReceiver(this , 8888 , "192.168.10.32" );
+        logReceiver = new LogReceiver(this , 8888 , "192.168.10.63" );
         logReceiver.start();
     }
     @Override
