@@ -13,23 +13,28 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is Info"
-        android:id="@+id/textView3"
+        android:text="Pawissakan Chiruuphapa"
+        android:id="@+id/developer1"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:singleLine="false"
         android:shadowColor="#6b5a5a"
-        android:textSize="30dp"
-        android:textColor="#000000" />
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        android:textIsSelectable="false" />
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_above="@+id/textView3"
+        android:text="Sanchai Jaktheerangkoon"
+        android:id="@+id/developer2"
+        android:singleLine="false"
+        android:shadowColor="#6b5a5a"
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/developer1"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="77dp"
-        android:src="@drawable/abc_btn_rating_star_on_mtrl_alpha" />
+        android:layout_marginTop="52dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -39,4 +44,20 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:onClick="onCloseClicked"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="ISEL Lab inc."
+        android:id="@+id/textView3"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:textIsSelectable="false" />
 </RelativeLayout>
