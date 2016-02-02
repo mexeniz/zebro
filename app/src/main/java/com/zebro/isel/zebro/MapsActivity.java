@@ -19,10 +19,63 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected void updateNodeLocation(String gpsStream){
         //Log.i("Map" , "Update Node Location "+ gpsStream);
-        System.out.println("Update Node Location "+ gpsStream);
+        gpsStream = gpsStream.substring(0,gpsStream.indexOf("END"));
+        System.out.println("Update Node Location " + gpsStream);
+
+        final String inputForThread = gpsStream;
+        // EDITING UI MUST RUN ON UI THREAD !!!!!!!
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMap.clear();
+                String gpsStream = new String(inputForThread);
+                String myloc = "";
+                if (gpsStream.indexOf(" ") < 0) {
+                    myloc = gpsStream;
+                    gpsStream = "";
+                } else {
+                    myloc = gpsStream.substring(0, gpsStream.indexOf(" "));
+                    gpsStream = gpsStream.substring(gpsStream.indexOf(" ") + 1);
+                }
+                System.out.println("MY LOCATION : " + myloc);
+                double lat = Double.parseDouble(myloc.substring(myloc.indexOf(",") + 1, myloc.lastIndexOf(",")));
+                double lng = Double.parseDouble(myloc.substring(myloc.lastIndexOf(",") + 1));
+                String Caption = "My Location " + myloc.substring(0, myloc.indexOf(","));
+
+                System.out.println("PASS CREATE CAPTION " + Caption);
+                LatLng myloc_latlng = new LatLng(lat, lng);
+                System.out.println("PASS CREATE MY LATLNG");
+                mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
+                System.out.println("PASS ADD MARKER");
+
+                String nodeloc = "";
+
+                while (!gpsStream.equals("")) {
+                    if (gpsStream.indexOf(" ") < 0) {
+                        nodeloc = gpsStream;
+                        gpsStream = "";
+                    } else {
+                        nodeloc = gpsStream.substring(0, gpsStream.indexOf(" "));
+                        gpsStream = gpsStream.substring(gpsStream.indexOf(" ") + 1);
+                    }
+
+                    System.out.println("NODE LOCATION : " + nodeloc);
+                    lat = Double.parseDouble(nodeloc.substring(nodeloc.indexOf(",") + 1, nodeloc.lastIndexOf(",")));
+                    lng = Double.parseDouble(nodeloc.substring(nodeloc.lastIndexOf(",") + 1));
+                    Caption = "My Location " + nodeloc.substring(0, nodeloc.indexOf(","));
+
+                    LatLng node_latlng = new LatLng(lat, lng);
+                    mMap.addMarker(new MarkerOptions().position(node_latlng).title(Caption));
+                }
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myloc_latlng, 19.0f));
+            }
+        });
+
     }
     protected void init(){
         logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") );
+        //logReceiver = new LogReceiver(this , 8888 , "192.168.1.36" );  // THIS IS FOR DEBUG
         logReceiver.start();
     }
     @Override
@@ -52,6 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
+        /*
         LatLng isel = new LatLng(13.736027, 100.533849);
         mMap.addMarker(new MarkerOptions().position(isel).title("ISEL Lab"));
 
@@ -64,7 +118,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(r2d2);
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(isel , 19.0f)) ;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(isel, 19.0f)) ;
+        */
     }
     @Override
     protected void onPause(){

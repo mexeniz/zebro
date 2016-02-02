@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public class LogReceiver extends Thread {
 
-    private final int freq = 1; // request freq in Hz
-    private final int timeout = 1000;
+    private final double freq = 1; // request freq in Hz
+    private final int timeout = 10000;
 
     MapsActivity mapsActivity ;
 
@@ -68,13 +68,15 @@ public class LogReceiver extends Thread {
                     System.out.println ("From server at: " + returnIPAddress + ":" + port);
                     System.out.println("Message: " + modifiedSentence);
 
+                    mapsActivity.updateNodeLocation(modifiedSentence);
+
                 }
                 catch (Exception ste)
                 {
-                    System.out.println ("Timeout Occurred: Packet assumed lost");
+                    System.out.println ("Timeout Occurred: Packet assumed lost" + ste.toString());
                 }
 
-                Thread.sleep(1000/freq);
+                Thread.sleep((int)(1000/freq));
             }
 
         } catch (Exception e) {
