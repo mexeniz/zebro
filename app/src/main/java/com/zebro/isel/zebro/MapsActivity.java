@@ -20,6 +20,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private LogReceiver logReceiver ;
+    private Notification notification;
 
     private static final double NEARLIMIT = 30; // in meter
     private static final double NEARESTLIMIT = 10; // in meter
@@ -28,6 +29,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int NEAR_COLOR = Color.GREEN;
     private static final int NEAREST_COLOR = Color.RED;
 
+    // Vibration Pattern Parameter
+    private static final int dot = 200;
+    private static final int gap = 200;
 
     protected void updateNodeLocation(String gpsStream){
         //Log.i("Map" , "Update Node Location "+ gpsStream);
@@ -111,12 +115,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 // FOR NOTIFICATION
+                notification.clear();
                 if (status == 2) {
                     System.out.println("VERY NEAR");
+                    long[] vibrate_pattern = {0 , dot , gap ,dot , gap ,dot , gap ,dot , gap ,dot , gap  } ;
+                    notification.vibratePatternOnce(vibrate_pattern);
+                    notification.playVeryNearNoti();
                 } else if (status == 1) {
                     System.out.println("NEAR");
+                    long[] vibrate_pattern = {0 , dot , gap ,dot , gap } ;
+                    notification.vibratePatternOnce(vibrate_pattern);
+                    notification.playNearNoti();
                 } else {
                     System.out.println("NORMAL");
+                    notification.vibrate(150);
+                   // notification.playNearNoti();
                 }
 
 
@@ -138,6 +151,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     protected void init(){
+        notification = new Notification(getApplicationContext());
         logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") );
         //logReceiver = new LogReceiver(this , 8888 , "192.168.1.36" );  // THIS IS FOR DEBUG
         logReceiver.start();

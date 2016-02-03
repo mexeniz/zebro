@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             isShook = true;
             Log.i("ShakeEvent", "Shaking " + count + " time.");
             notification.vibrate(500);
-            notification.playNoti();
+            notification.playStartNoti();
             startApp("Walk");
         }
     }
