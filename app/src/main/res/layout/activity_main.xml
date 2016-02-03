@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/logo2"
-        android:src="@drawable/zebro"
+        android:src="@drawable/zebro_eye"
         android:background="#00ffffff"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/logo1"
-            android:src="@drawable/zebro_invert"
+            android:src="@drawable/zebro_eye_invert"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp" />
