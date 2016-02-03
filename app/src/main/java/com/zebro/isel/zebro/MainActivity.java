@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private ShakeDetector mShakeDetector;
 
     //DENSO WSU IP Address
+    public static final String PREFS_NAME = "MyPrefsFile" ;
     protected String densoIpAddress = "192.168.10.77";
 
     // Fab animation parameter
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, SET_IP_ADDRESS);
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("Result","Request:"+requestCode+" DATA:"+data.getStringExtra("densoIpAddress"));
+        Log.i("Result", "Request:" + requestCode + " DATA:" + data.getStringExtra("densoIpAddress"));
         if (requestCode == SET_IP_ADDRESS) {
             if (resultCode == RESULT_OK) {
                 densoIpAddress = data.getStringExtra("densoIpAddress") ;
@@ -285,6 +287,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME , 0);
+        if(settings.contains("densoIpAddress")){
+            densoIpAddress = settings.getString("densoIpAddress" , "192.168.10.77");
+        }
+        else{
+            densoIpAddress = "192.168.10.84" ;
+        }
         init();
         welcomeAnimation();
     }
@@ -301,5 +310,16 @@ public class MainActivity extends AppCompatActivity {
         // Add the following line to unregister the Sensor Manager onPause
         mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
+        SharedPreferences.Editor editor = settings.edit() ;
+        Log.d("Settings","Set Denso IP Address = "+densoIpAddress);
+        editor.putString("densoIpAddress" , densoIpAddress);
+
+        editor.commit() ;
     }
 }

@@ -1,5 +1,6 @@
 package com.zebro.isel.zebro;
 
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private LogReceiver logReceiver ;
+
+    private static final double NEARLIMIT = 30; // in meter
+    private static final double NEARESTLIMIT = 10; // in meter
 
     protected void updateNodeLocation(String gpsStream){
         //Log.i("Map" , "Update Node Location "+ gpsStream);
@@ -50,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 String nodeloc = "";
 
+                int status = 0; // 0 = normal / 1 = near / 2 = nearest
+
                 while (!gpsStream.equals("")) {
                     if (gpsStream.indexOf(" ") < 0) {
                         nodeloc = gpsStream;
@@ -66,13 +72,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     LatLng node_latlng = new LatLng(lat, lng);
                     mMap.addMarker(new MarkerOptions().position(node_latlng).title(Caption));
+
+                    double distance = calculateDistance(myloc_latlng, node_latlng);
+                    System.out.println("Distance : " + distance);
+
+                    if(distance <= NEARESTLIMIT){
+                        //System.out.println("CAUTION : VERY NEAR");
+                        status = 2;
+                    }else if(distance <= NEARLIMIT){
+                        //System.out.println("CAUTION : NEAR");
+                        if(status == 0) status = 1;
+                    }
                 }
+
+                // FOR NOTIFICATION
+                if(status == 2){
+                    System.out.println("VERY NEAR");
+                }else if(status == 1){
+                    System.out.println("NEAR");
+                }else{
+                    System.out.println("NORMAL");
+                }
+
 
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myloc_latlng, 19.0f));
             }
         });
 
     }
+
+    protected static double calculateDistance(LatLng l1, LatLng l2){
+        Location locationA = new Location("point A");
+        locationA.setLatitude(l1.latitude);
+        locationA.setLongitude(l1.longitude);
+        Location locationB = new Location("point B");
+        locationB.setLatitude(l2.latitude);
+        locationB.setLongitude(l2.longitude);
+        double distance = locationA.distanceTo(locationB) ;
+        return distance;
+    }
+
     protected void init(){
         logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") );
         //logReceiver = new LogReceiver(this , 8888 , "192.168.1.36" );  // THIS IS FOR DEBUG
