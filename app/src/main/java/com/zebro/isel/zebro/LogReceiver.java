@@ -85,6 +85,9 @@ public class LogReceiver extends Thread {
         }
 
     }
+    public void kill(){
+        clientSocket = null ;
+    }
     /*
 
     InetAddress myIP ;
