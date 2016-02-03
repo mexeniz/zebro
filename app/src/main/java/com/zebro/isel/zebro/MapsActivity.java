@@ -1,5 +1,6 @@
 package com.zebro.isel.zebro;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -20,6 +23,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final double NEARLIMIT = 30; // in meter
     private static final double NEARESTLIMIT = 10; // in meter
+
+    private static final int NORMAL_COLOR = Color.GRAY;
+    private static final int NEAR_COLOR = Color.GREEN;
+    private static final int NEAREST_COLOR = Color.RED;
+
 
     protected void updateNodeLocation(String gpsStream){
         //Log.i("Map" , "Update Node Location "+ gpsStream);
@@ -44,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("MY LOCATION : " + myloc);
                 double lat = Double.parseDouble(myloc.substring(myloc.indexOf(",") + 1, myloc.lastIndexOf(",")));
                 double lng = Double.parseDouble(myloc.substring(myloc.lastIndexOf(",") + 1));
-                String Caption = "My Location " + myloc.substring(0, myloc.indexOf(","));
+                String Caption = "My Location";
 
                 System.out.println("PASS CREATE CAPTION " + Caption);
                 LatLng myloc_latlng = new LatLng(lat, lng);
@@ -68,29 +76,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     System.out.println("NODE LOCATION : " + nodeloc);
                     lat = Double.parseDouble(nodeloc.substring(nodeloc.indexOf(",") + 1, nodeloc.lastIndexOf(",")));
                     lng = Double.parseDouble(nodeloc.substring(nodeloc.lastIndexOf(",") + 1));
-                    Caption = "My Location " + nodeloc.substring(0, nodeloc.indexOf(","));
+                    Caption = "Neighbor";
 
                     LatLng node_latlng = new LatLng(lat, lng);
-                    mMap.addMarker(new MarkerOptions().position(node_latlng).title(Caption));
+                    //mMap.addMarker(new MarkerOptions().position(node_latlng).title(Caption));
+                    Circle circle;
 
                     double distance = calculateDistance(myloc_latlng, node_latlng);
                     System.out.println("Distance : " + distance);
 
-                    if(distance <= NEARESTLIMIT){
+                    if (distance <= NEARESTLIMIT) {
                         //System.out.println("CAUTION : VERY NEAR");
                         status = 2;
-                    }else if(distance <= NEARLIMIT){
+                        circle = mMap.addCircle(new CircleOptions()
+                                .center(node_latlng)
+                                .radius(2)
+                                .strokeColor(Color.TRANSPARENT)
+                                .fillColor(NEAREST_COLOR));
+                    } else if (distance <= NEARLIMIT) {
                         //System.out.println("CAUTION : NEAR");
-                        if(status == 0) status = 1;
+                        if (status == 0) status = 1;
+                        circle = mMap.addCircle(new CircleOptions()
+                                .center(node_latlng)
+                                .radius(2)
+                                .strokeColor(Color.TRANSPARENT)
+                                .fillColor(NEAR_COLOR));
+                    }else{
+                        circle = mMap.addCircle(new CircleOptions()
+                                .center(node_latlng)
+                                .radius(2)
+                                .strokeColor(Color.TRANSPARENT)
+                                .fillColor(NORMAL_COLOR));
                     }
                 }
 
                 // FOR NOTIFICATION
-                if(status == 2){
+                if (status == 2) {
                     System.out.println("VERY NEAR");
-                }else if(status == 1){
+                } else if (status == 1) {
                     System.out.println("NEAR");
-                }else{
+                } else {
                     System.out.println("NORMAL");
                 }
 
@@ -163,6 +188,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onPause(){
         super.onPause();
+        //Log.i("PPP", "PPP");
+        //finish();
+        logReceiver.kill();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        //Log.i("SSS","SSS");
+        logReceiver.kill();
+    }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        logReceiver.kill();
+        //Log.d("DDD","DDD");
         finish();
     }
+
 }
