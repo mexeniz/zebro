@@ -31,11 +31,11 @@ public class Notification {
     private void initSounds() {
 
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
 
         //AudioAttributes audioAttributes = new AudioAttributes.Builder().setLegacyStreamType(AudioAttributes.USAGE_MEDIA).build();
         //soundPool = new SoundPool.Builder().setAudioAttributes(audioAttributes).build();
-        soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
+        soundPool = new SoundPool(4, AudioManager.STREAM_NOTIFICATION, 100);
 
         soundPoolMap = new HashMap<Integer, Integer>();
 
@@ -65,7 +65,7 @@ public class Notification {
             /*veryNearPlayer = MediaPlayer.create(context,R.raw.nfc_transfer_initiated);
             veryNearPlayer.seekTo(0);
             veryNearPlayer.start();*/
-            previousTrack = soundPool.play(soundPoolMap.get(SOUND_NEAR), streamVolume, streamVolume, 1, 2, 1f);
+            previousTrack = soundPool.play(soundPoolMap.get(SOUND_NEAR), streamVolume, streamVolume, 1, 2, 2.0f);
             Log.i("Notification","Play Very Near sound");
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +77,7 @@ public class Notification {
             /*nearPlayer = MediaPlayer.create(context, R.raw.nfc_initiated);
             nearPlayer.seekTo(0);
             nearPlayer.start();*/
-            previousTrack = soundPool.play(soundPoolMap.get(SOUND_VERY_NEAR), streamVolume, streamVolume, 1, 0, 1f);
+            previousTrack = soundPool.play(soundPoolMap.get(SOUND_VERY_NEAR), streamVolume, streamVolume, 1, 1, 1.5f);
             Log.i("Notification", "Play Near sound");
         } catch (Exception e) {
             e.printStackTrace();
