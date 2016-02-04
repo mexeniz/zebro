@@ -312,16 +312,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (status == 2) {
                     System.out.println("VERY NEAR");
                     long[] vibrate_pattern = {0 , dot , gap ,dot , gap ,dot , gap ,dot , gap ,dot , gap  } ;
-                    //notification.vibratePatternOnce(vibrate_pattern);
-                    //notification.playVeryNearNoti();
+                    notification.vibratePatternOnce(vibrate_pattern);
+                    notification.playVeryNearNoti();
                 } else if (status == 1) {
                     System.out.println("NEAR");
                     long[] vibrate_pattern = {0 , dot , gap ,dot , gap } ;
-                    //notification.vibratePatternOnce(vibrate_pattern);
-                    //notification.playNearNoti();
+                    notification.vibratePatternOnce(vibrate_pattern);
+                    notification.playNearNoti();
                 } else {
                     System.out.println("NORMAL");
-                    //notification.vibrate(150);
+                    notification.vibrate(150);
                    // notification.playNearNoti(); /////////////// DONT HAVE
                 }
 
