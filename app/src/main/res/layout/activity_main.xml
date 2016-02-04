@@ -11,7 +11,7 @@
     android:backgroundTintMode="src_over">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ZEBRO"
         android:id="@+id/title"
@@ -19,10 +19,11 @@
         android:textSize="50dp"
         android:textColor="#ffffff"
         android:textAlignment="center"
-        android:layout_marginTop="35dp"
         android:focusable="false"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="35dp"
         android:layout_below="@+id/logo2"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -50,7 +51,8 @@
         android:alpha="0"
         android:visibility="invisible"
         android:layout_above="@+id/iselLab"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginBottom="50dp"
+        android:layout_alignRight="@+id/title" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/carFab"
@@ -66,7 +68,8 @@
         android:visibility="invisible"
         android:alpha="0"
         android:layout_above="@+id/iselLab"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginBottom="50dp"
+        android:layout_alignLeft="@+id/title" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -131,18 +134,19 @@
             android:layout_marginTop="35dp" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ZEBRO"
-            android:id="@+id/textView2"
+            android:id="@+id/frontTitle"
             android:textStyle="bold|italic"
             android:textSize="50dp"
             android:textColor="#000000"
             android:textAlignment="center"
             android:focusable="false"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentStart="false"
             android:layout_marginTop="35dp"
-            android:layout_below="@+id/logo1" />
+            android:layout_below="@+id/logo1"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

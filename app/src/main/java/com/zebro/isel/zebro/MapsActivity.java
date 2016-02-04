@@ -5,6 +5,7 @@ import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,11 +17,22 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private LogReceiver logReceiver ;
     private Notification notification;
+
+    private int zebroColor ;
+    private static final String color1 = "#616161" ;
+    private static final String color2 = "#9E9E9E" ;
+    private TextView zText ;
+    private TextView eText ;
+    private TextView bText ;
+    private TextView rText ;
+    private TextView oText ;
 
     private static final double NEARLIMIT = 30; // in meter
     private static final double NEARESTLIMIT = 10; // in meter
@@ -33,6 +45,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int dot = 200;
     private static final int gap = 200;
 
+    protected void animateText(){
+        if(zebroColor == 0){
+            zText.setTextColor(Color.parseColor(color1));
+            eText.setTextColor(Color.parseColor(color2));
+            bText.setTextColor(Color.parseColor(color1));
+            rText.setTextColor(Color.parseColor(color2));
+            oText.setTextColor(Color.parseColor(color1));
+            zebroColor = 1 ;
+        }else if (zebroColor == 1){
+            zText.setTextColor(Color.parseColor(color2));
+            eText.setTextColor(Color.parseColor(color1));
+            bText.setTextColor(Color.parseColor(color2));
+            rText.setTextColor(Color.parseColor(color1));
+            oText.setTextColor(Color.parseColor(color2));
+            zebroColor = 0 ;
+        }
+    }
+
     protected void updateNodeLocation(String gpsStream){
         //Log.i("Map" , "Update Node Location "+ gpsStream);
         gpsStream = gpsStream.substring(0,gpsStream.indexOf("END"));
@@ -43,6 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                animateText();
                 mMap.clear();
                 String gpsStream = new String(inputForThread);
                 String myloc = "";
@@ -61,7 +92,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("PASS CREATE CAPTION " + Caption);
                 LatLng myloc_latlng = new LatLng(lat, lng);
                 System.out.println("PASS CREATE MY LATLNG");
-                mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
+                MarkerOptions marker = new MarkerOptions()
+                        .position(myloc_latlng)
+                        .title(Caption)
+                        .snippet(lat + " " + lng)
+                        .anchor(0.5f, 0.5f)
+                        .rotation(90.0f + 30.0f * zebroColor)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_navigation));
+                mMap.addMarker(marker);
+                // mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
                 System.out.println("PASS ADD MARKER");
 
                 String nodeloc = "";
@@ -151,6 +190,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     protected void init(){
+        //Toggling color text
+        zebroColor = 0 ;
+        zText = (TextView) findViewById(R.id.zText);
+        eText = (TextView) findViewById(R.id.eText);
+        bText = (TextView) findViewById(R.id.bText);
+        rText = (TextView) findViewById(R.id.rText);
+        oText = (TextView) findViewById(R.id.oText);
+
         notification = new Notification(getApplicationContext());
         logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") );
         //logReceiver = new LogReceiver(this , 8888 , "192.168.1.36" );  // THIS IS FOR DEBUG

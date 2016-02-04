@@ -15,4 +15,76 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.zebro.isel.zebro.MapsActivity" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Z"
+            android:id="@+id/zText"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:textColor="#616161"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E"
+            android:id="@+id/eText"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:textColor="#9E9E9E"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B"
+            android:id="@+id/bText"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:textColor="#616161"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R"
+            android:id="@+id/rText"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:textColor="#9E9E9E"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O"
+            android:id="@+id/oText"
+            android:textStyle="bold|italic"
+            android:textSize="20dp"
+            android:textColor="#616161"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
+
 </RelativeLayout>
