@@ -132,10 +132,13 @@ public class MainActivity extends AppCompatActivity {
             switch (mode){
                 case CAR_MODE :
                     modeText = "CAR" ;
+                    break;
                 case BIKE_MODE :
                     modeText = "BIKE" ;
+                    break;
                 case WALK_MODE :
                     modeText = "WALK" ;
+                    break;
                 case DISABLE_MODE :
                     modeText = "DISABLE" ;
             }
@@ -149,7 +152,8 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                     intent.putExtra("densoIpAddress",densoIpAddress);
-                    intent.putExtra("mode",mode);
+                    //Set mode for LogReceiver
+                    intent.setFlags(mode);
 
                     // Open Connection...
                     try {

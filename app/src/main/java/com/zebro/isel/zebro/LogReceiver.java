@@ -17,19 +17,21 @@ public class LogReceiver extends Thread {
     private final double freq = 0.5; // request freq in Hz
     private final int timeout = 10000;
 
-    MapsActivity mapsActivity ;
+    private MapsActivity mapsActivity ;
 
-    String serverHostname ;
+    private String serverHostname ;
     //BufferedReader inFromUser ;
-    DatagramSocket clientSocket ;
-    int targetPort ;
-    InetAddress IPAddress ;
+    private DatagramSocket clientSocket ;
+    private int targetPort ;
+    private InetAddress IPAddress ;
+    private int mode ;
 
 
     byte[] sendData = new byte[1024];
     byte[] receiveData = new byte[1024];
-    public LogReceiver(MapsActivity m , int port, String ip){
+    public LogReceiver(MapsActivity m , int port, String ip , int mode){
         try{
+            this.mode = mode ;
             serverHostname = new String (ip);
             //BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
             mapsActivity = m;
@@ -44,7 +46,7 @@ public class LogReceiver extends Thread {
         try {
             System.out.println ("Attemping to connect to " + IPAddress + ") via UDP port " + targetPort);
             while(true){
-                String message = "REQUEST DATA";
+                String message = mode+" REQUEST DATA";
                 sendData = message.getBytes();
 
                 System.out.println("Send Request " + sendData.length + " bytes Message: " + message);
