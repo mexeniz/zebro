@@ -40,7 +40,7 @@ public class Notification {
         soundPoolMap = new HashMap<Integer, Integer>();
 
         soundPoolMap.put(SOUND_NEAR, soundPool.load(context, R.raw.ceres, 1));
-        soundPoolMap.put(SOUND_VERY_NEAR, soundPool.load(context, R.raw.ceres, 1));
+        soundPoolMap.put(SOUND_VERY_NEAR, soundPool.load(context, R.raw.alarm1, 1));
 
     }
 

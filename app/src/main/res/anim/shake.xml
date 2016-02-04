@@ -5,7 +5,7 @@
         android:fromDegrees="-5.0"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:repeatCount="80"
+        android:repeatCount="40"
         android:repeatMode="reverse"
         android:toDegrees="5.0" />
 </set>
