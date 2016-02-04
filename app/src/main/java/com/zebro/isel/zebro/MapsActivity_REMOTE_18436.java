@@ -19,8 +19,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.w3c.dom.Text;
 
-import java.util.HashMap;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -49,10 +47,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // Vibration Pattern Parameter
     private static final int dot = 200;
     private static final int gap = 200;
-
-
-    // TYPE : 1 = car , 2 = bike , 3 = person , 4 = handicap
-    private HashMap<Integer,gps_location> ipMapType;
 
     protected void animateText(){
         if(zebroColor == 0){
@@ -135,177 +129,48 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     double distance = calculateDistance(myloc_latlng, node_latlng);
                     System.out.println("Distance : " + distance);
 
-                    String node_ip = nodeloc.substring(0, nodeloc.indexOf(","));
-                    int ip_int = Integer.parseInt(node_ip.substring(0, node_ip.indexOf("."))) * 256;
-                    node_ip = node_ip.substring(node_ip.indexOf(".") + 1);
-                    ip_int += Integer.parseInt(node_ip.substring(0,node_ip.indexOf("."))) * 256;
-                    node_ip = node_ip.substring(node_ip.indexOf(".") + 1);
-                    ip_int += Integer.parseInt(node_ip.substring(0,node_ip.indexOf("."))) * 256;
-                    node_ip = node_ip.substring(node_ip.indexOf(".") + 1);
-                    ip_int += Integer.parseInt(node_ip.substring(0, node_ip.indexOf("/")));
-                    node_ip = node_ip.substring(node_ip.indexOf("/") + 1);
-                    int type = Integer.parseInt(node_ip);
+                    if (distance <= NEARESTLIMIT) {
+                        //System.out.println("CAUTION : VERY NEAR");
+                        status = 2;
 
-                    gps_location temp;
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(node_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_account));
+                        mMap.addMarker(marker);
 
-                    float deg = 0;
+                    } else if (distance <= NEARLIMIT) {
+                        //System.out.println("CAUTION : NEAR");
+                        if (status == 0) status = 1;
 
-                    if(ipMapType.containsKey(ip_int)){
-                        temp = ipMapType.get(ip_int);
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(node_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_bike));
+                        mMap.addMarker(marker);
 
-                        deg = calculateDegree(node_latlng, temp.latlng);
-                        System.out.println("DEGREE : " + deg);
 
-                        temp.type = type;
-                        temp.latlng = node_latlng;
-
+                        /*circle = mMap.addCircle(new CircleOptions()
+                                .center(node_latlng)
+                                .radius(2)
+                                .strokeColor(Color.TRANSPARENT)
+                                .fillColor(NEAR_COLOR));*/
                     }else{
-                        temp = new gps_location();
-                        temp.latlng = node_latlng;
-                        temp.type = type;
-                    }
 
-                    ipMapType.put(ip_int, temp);
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(node_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_nav));
+                        mMap.addMarker(marker);
 
-
-                    System.out.println("MAP SIZE : " + ipMapType.size());
-                    if(type == 1) { // CAR
-                        if (distance <= NEARESTLIMIT) {
-                            //System.out.println("CAUTION : VERY NEAR");
-                            status = 2;
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    .rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_nav));
-                            mMap.addMarker(marker);
-                        } else if (distance <= NEARLIMIT) {
-                            //System.out.println("CAUTION : NEAR");
-                            if (status == 0) status = 1;
-
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    .rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_nav));
-                            mMap.addMarker(marker);
-                        } else {
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    .rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_nav));
-                            mMap.addMarker(marker);
-                        }
-                    }else if(type == 2) { // BIKE
-                        if (distance <= NEARESTLIMIT) {
-                            //System.out.println("CAUTION : VERY NEAR");
-                            status = 2;
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_bike));
-                            mMap.addMarker(marker);
-                        } else if (distance <= NEARLIMIT) {
-                            //System.out.println("CAUTION : NEAR");
-                            if (status == 0) status = 1;
-
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_bike));
-                            mMap.addMarker(marker);
-                        } else {
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_bike));
-                            mMap.addMarker(marker);
-                        }
-                    }else if(type == 3) { // PEOPLE
-                        if (distance <= NEARESTLIMIT) {
-                            //System.out.println("CAUTION : VERY NEAR");
-                            status = 2;
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_account));
-                            mMap.addMarker(marker);
-                        } else if (distance <= NEARLIMIT) {
-                            //System.out.println("CAUTION : NEAR");
-                            if (status == 0) status = 1;
-
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_account));
-                            mMap.addMarker(marker);
-                        } else {
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_account));
-                            mMap.addMarker(marker);
-                        }
-                    }else if(type == 4) { // HANDICAP
-                        if (distance <= NEARESTLIMIT) {
-                            //System.out.println("CAUTION : VERY NEAR");
-                            status = 2;
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_wheelchair));
-                            mMap.addMarker(marker);
-                        } else if (distance <= NEARLIMIT) {
-                            //System.out.println("CAUTION : NEAR");
-                            if (status == 0) status = 1;
-
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_wheelchair));
-                            mMap.addMarker(marker);
-                        } else {
-                            MarkerOptions marker = new MarkerOptions()
-                                    .position(node_latlng)
-                                    .title(Caption)
-                                    .snippet(lat + " " + lng)
-                                    //.rotation(deg)
-                                    .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_wheelchair));
-                            mMap.addMarker(marker);
-                        }
+                        /*circle = mMap.addCircle(new CircleOptions()
+                                .center(node_latlng)
+                                .radius(2)
+                                .strokeColor(Color.TRANSPARENT)
+                                .fillColor(NORMAL_COLOR));*/
                     }
                 }
 
@@ -324,7 +189,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 } else {
                     System.out.println("NORMAL");
                     notification.vibrate(150);
-                   // notification.playNearNoti(); /////////////// DONT HAVE
+                   // notification.playNearNoti();
                 }
 
 
@@ -345,19 +210,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return distance;
     }
 
-    protected static float calculateDegree(LatLng cur, LatLng prev){
-        Location locationA = new Location("point A");
-        locationA.setLatitude(cur.latitude);
-        locationA.setLongitude(cur.longitude);
-
-        Location locationB = new Location("point B");
-        locationB.setLatitude(prev.latitude);
-        locationB.setLongitude(prev.longitude);
-
-        float degree = locationB.bearingTo(locationA) ;
-        return degree;
-    }
-
     protected void init(){
         //Toggling color text
         zebroColor = 0 ;
@@ -366,8 +218,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         bText = (TextView) findViewById(R.id.bText);
         rText = (TextView) findViewById(R.id.rText);
         oText = (TextView) findViewById(R.id.oText);
-
-        ipMapType = new HashMap<Integer, gps_location>();
 
         notification = new Notification(getApplicationContext());
         logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") , getIntent().getFlags() );
@@ -461,9 +311,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         finish();
     }
 
-    private class gps_location{
-        LatLng latlng;
-        public int type;
-    }
 }
-

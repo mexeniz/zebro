@@ -39,9 +39,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final double NEARLIMIT = 30; // in meter
     private static final double NEARESTLIMIT = 10; // in meter
 
-    private float nearFactor ;
-    private float nearestFactor ;
-
     private static final int NORMAL_COLOR = Color.GRAY;
     private static final int NEAR_COLOR = Color.GREEN;
     private static final int NEAREST_COLOR = Color.RED;
@@ -103,9 +100,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("PASS CREATE MY LATLNG");
 
                 // mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
+
                 Circle circle = mMap.addCircle(new CircleOptions()
                         .center(myloc_latlng)
-                        .radius(2)
+                        .radius(3)
                         .strokeColor(Color.WHITE)
                         .fillColor(Color.parseColor("#448AFF")));
 
@@ -370,31 +368,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ipMapType = new HashMap<Integer, gps_location>();
 
         notification = new Notification(getApplicationContext());
-        logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") , getIntent().getFlags() );
+        logReceiver = new LogReceiver(this , 8888 , getIntent().getStringExtra("densoIpAddress") );
         //logReceiver = new LogReceiver(this , 8888 , "192.168.1.36" );  // THIS IS FOR DEBUG
         logReceiver.start();
-
-        //Initiate Warning Distance Factor
-        int mode = getIntent().getFlags() ;
-        Log.i("Warning Mode" , ""+mode);
-        switch (mode){
-            case (MainActivity.CAR_MODE):
-                nearFactor = 1.0f ;
-                nearestFactor = 1.0f ;
-                break;
-            case (MainActivity.BIKE_MODE):
-                nearFactor = 1.0f ;
-                nearestFactor = 1.0f ;
-                break;
-            case (MainActivity.WALK_MODE):
-                nearFactor = 1.0f ;
-                nearestFactor = 1.0f ;
-                break;
-            case (MainActivity.DISABLE_MODE):
-                nearFactor = 1.0f ;
-                nearestFactor = 1.0f ;
-                break;
-        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

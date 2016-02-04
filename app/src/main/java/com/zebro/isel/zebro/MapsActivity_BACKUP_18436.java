@@ -103,9 +103,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("PASS CREATE MY LATLNG");
 
                 // mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
+<<<<<<< HEAD
+
+                Circle circle = mMap.addCircle(new CircleOptions()
+                        .center(myloc_latlng)
+                        .radius(3)
+=======
                 Circle circle = mMap.addCircle(new CircleOptions()
                         .center(myloc_latlng)
                         .radius(2)
+>>>>>>> 95a945863e002aae2ee6efcd282d8821395ef14e
                         .strokeColor(Color.WHITE)
                         .fillColor(Color.parseColor("#448AFF")));
 
@@ -135,6 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     double distance = calculateDistance(myloc_latlng, node_latlng);
                     System.out.println("Distance : " + distance);
 
+<<<<<<< HEAD
                     String node_ip = nodeloc.substring(0, nodeloc.indexOf(","));
                     int ip_int = Integer.parseInt(node_ip.substring(0, node_ip.indexOf("."))) * 256;
                     node_ip = node_ip.substring(node_ip.indexOf(".") + 1);
@@ -159,12 +167,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         temp.type = type;
                         temp.latlng = node_latlng;
 
+=======
+                    if (distance <= NEARESTLIMIT) {
+                        //System.out.println("CAUTION : VERY NEAR");
+                        status = 2;
+
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(node_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_account));
+                        mMap.addMarker(marker);
+
+                    } else if (distance <= NEARLIMIT) {
+                        //System.out.println("CAUTION : NEAR");
+                        if (status == 0) status = 1;
+
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(node_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_bike));
+                        mMap.addMarker(marker);
+
+
+                        /*circle = mMap.addCircle(new CircleOptions()
+                                .center(node_latlng)
+                                .radius(2)
+                                .strokeColor(Color.TRANSPARENT)
+                                .fillColor(NEAR_COLOR));*/
+>>>>>>> 95a945863e002aae2ee6efcd282d8821395ef14e
                     }else{
                         temp = new gps_location();
                         temp.latlng = node_latlng;
                         temp.type = type;
                     }
 
+<<<<<<< HEAD
                     ipMapType.put(ip_int, temp);
 
 
@@ -306,6 +345,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_wheelchair));
                             mMap.addMarker(marker);
                         }
+=======
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(node_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_nav));
+                        mMap.addMarker(marker);
+
+                        /*circle = mMap.addCircle(new CircleOptions()
+                                .center(node_latlng)
+                                .radius(2)
+                                .strokeColor(Color.TRANSPARENT)
+                                .fillColor(NORMAL_COLOR));*/
+>>>>>>> 95a945863e002aae2ee6efcd282d8821395ef14e
                     }
                 }
 
