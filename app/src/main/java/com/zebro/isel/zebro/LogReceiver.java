@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class LogReceiver extends Thread {
 
-    private final double freq = 2; // request freq in Hz
+    private final double freq = 0.5; // request freq in Hz
     private final int timeout = 10000;
 
     MapsActivity mapsActivity ;

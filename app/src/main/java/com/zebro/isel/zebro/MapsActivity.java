@@ -92,14 +92,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("PASS CREATE CAPTION " + Caption);
                 LatLng myloc_latlng = new LatLng(lat, lng);
                 System.out.println("PASS CREATE MY LATLNG");
-                MarkerOptions marker = new MarkerOptions()
-                        .position(myloc_latlng)
-                        .title(Caption)
-                        .snippet(lat + " " + lng)
-                        .anchor(0.5f, 0.5f)
-                        .rotation(90.0f + 30.0f * zebroColor)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_navigation));
-                mMap.addMarker(marker);
+
                 // mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
                 System.out.println("PASS ADD MARKER");
 
@@ -123,7 +116,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     LatLng node_latlng = new LatLng(lat, lng);
                     //mMap.addMarker(new MarkerOptions().position(node_latlng).title(Caption));
-                    Circle circle;
+                    Circle circle = mMap.addCircle(new CircleOptions()
+                            .center(node_latlng)
+                            .radius(2)
+                            .strokeColor(Color.WHITE)
+                            .fillColor(Color.parseColor("448AFF")));
 
                     double distance = calculateDistance(myloc_latlng, node_latlng);
                     System.out.println("Distance : " + distance);
@@ -131,25 +128,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if (distance <= NEARESTLIMIT) {
                         //System.out.println("CAUTION : VERY NEAR");
                         status = 2;
-                        circle = mMap.addCircle(new CircleOptions()
-                                .center(node_latlng)
-                                .radius(2)
-                                .strokeColor(Color.TRANSPARENT)
-                                .fillColor(NEAREST_COLOR));
+
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(myloc_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_account));
+                        mMap.addMarker(marker);
+
                     } else if (distance <= NEARLIMIT) {
                         //System.out.println("CAUTION : NEAR");
                         if (status == 0) status = 1;
-                        circle = mMap.addCircle(new CircleOptions()
+
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(myloc_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_bike));
+                        mMap.addMarker(marker);
+
+
+                        /*circle = mMap.addCircle(new CircleOptions()
                                 .center(node_latlng)
                                 .radius(2)
                                 .strokeColor(Color.TRANSPARENT)
-                                .fillColor(NEAR_COLOR));
+                                .fillColor(NEAR_COLOR));*/
                     }else{
-                        circle = mMap.addCircle(new CircleOptions()
+
+                        MarkerOptions marker = new MarkerOptions()
+                                .position(myloc_latlng)
+                                .title(Caption)
+                                .snippet(lat + " " + lng)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_nav));
+                        mMap.addMarker(marker);
+
+                        /*circle = mMap.addCircle(new CircleOptions()
                                 .center(node_latlng)
                                 .radius(2)
                                 .strokeColor(Color.TRANSPARENT)
-                                .fillColor(NORMAL_COLOR));
+                                .fillColor(NORMAL_COLOR));*/
                     }
                 }
 
