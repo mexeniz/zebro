@@ -94,6 +94,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println("PASS CREATE MY LATLNG");
 
                 // mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
+                Circle circle = mMap.addCircle(new CircleOptions()
+                        .center(myloc_latlng)
+                        .radius(2)
+                        .strokeColor(Color.WHITE)
+                        .fillColor(Color.parseColor("#448AFF")));
+
                 System.out.println("PASS ADD MARKER");
 
                 String nodeloc = "";
@@ -116,11 +122,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     LatLng node_latlng = new LatLng(lat, lng);
                     //mMap.addMarker(new MarkerOptions().position(node_latlng).title(Caption));
-                    Circle circle = mMap.addCircle(new CircleOptions()
-                            .center(node_latlng)
-                            .radius(2)
-                            .strokeColor(Color.WHITE)
-                            .fillColor(Color.parseColor("448AFF")));
 
                     double distance = calculateDistance(myloc_latlng, node_latlng);
                     System.out.println("Distance : " + distance);
@@ -130,7 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         status = 2;
 
                         MarkerOptions marker = new MarkerOptions()
-                                .position(myloc_latlng)
+                                .position(node_latlng)
                                 .title(Caption)
                                 .snippet(lat + " " + lng)
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_account));
@@ -141,7 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (status == 0) status = 1;
 
                         MarkerOptions marker = new MarkerOptions()
-                                .position(myloc_latlng)
+                                .position(node_latlng)
                                 .title(Caption)
                                 .snippet(lat + " " + lng)
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_bike));
@@ -156,7 +157,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }else{
 
                         MarkerOptions marker = new MarkerOptions()
-                                .position(myloc_latlng)
+                                .position(node_latlng)
                                 .title(Caption)
                                 .snippet(lat + " " + lng)
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_nav));

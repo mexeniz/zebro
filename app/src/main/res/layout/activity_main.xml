@@ -10,20 +10,174 @@
     android:backgroundTint="#46000000"
     android:backgroundTintMode="src_over">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ZEBRO"
-        android:id="@+id/title"
-        android:textStyle="bold|italic"
-        android:textSize="50dp"
-        android:textColor="#ffffff"
         android:textAlignment="center"
         android:focusable="false"
         android:layout_alignParentStart="false"
         android:layout_marginTop="35dp"
         android:layout_below="@+id/logo2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:id="@+id/titleLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Z"
+            android:id="@+id/zTitle"
+            android:textStyle="bold|italic"
+            android:textSize="50dp"
+            android:textColor="#FAFAFA"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E"
+            android:id="@+id/eTitle"
+            android:textStyle="bold|italic"
+            android:textSize="50dp"
+            android:textColor="#FAFAFA"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B"
+            android:id="@+id/bTitle"
+            android:textStyle="bold|italic"
+            android:textSize="50dp"
+            android:textColor="#FAFAFA"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R"
+            android:id="@+id/rTitle"
+            android:textStyle="bold|italic"
+            android:textSize="50dp"
+            android:textColor="#FAFAFA"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O"
+            android:id="@+id/oTitle"
+            android:textStyle="bold|italic"
+            android:textSize="50dp"
+            android:textColor="#FAFAFA"
+            android:textAlignment="center"
+            android:focusable="false"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="60dp"
+        android:layout_above="@+id/iselLab"
+        android:id="@+id/fabLayout"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_below="@+id/titleLayout">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="10dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/carFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/ic_car"
+                android:onClick="onCarClicked"
+                app:tint="#3F51B5"
+                app:fabSize="normal"
+                android:visibility="invisible"
+                android:alpha="0"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/bikeFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/ic_bike"
+                android:onClick="onWalkClicked"
+                app:tint="#FFD3D3D3"
+                app:fabSize="normal"
+                android:alpha="0"
+                android:visibility="invisible"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/walkFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/ic_walk"
+                android:onClick="onWalkClicked"
+                app:tint="#FFD3D3D3"
+                app:fabSize="normal"
+                android:alpha="0"
+                android:visibility="invisible"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/disableFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/ic_disable"
+                android:onClick="onCarClicked"
+                app:tint="#3F51B5"
+                app:fabSize="normal"
+                android:visibility="invisible"
+                android:alpha="0"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -35,41 +189,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp" />
 
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/walkFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_walk"
-        android:onClick="onWalkClicked"
-        app:tint="#FFD3D3D3"
-        app:fabSize="normal"
-        android:layout_alignEnd="@+id/logo2"
-        android:layout_marginRight="20dp"
-        android:alpha="0"
-        android:visibility="invisible"
-        android:layout_above="@+id/iselLab"
-        android:layout_marginBottom="50dp"
-        android:layout_alignRight="@+id/title" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/carFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_car"
-        android:onClick="onCarClicked"
-        app:tint="#3F51B5"
-        app:fabSize="normal"
-        android:layout_alignStart="@+id/logo2"
-        android:layout_marginLeft="20dp"
-        android:visibility="invisible"
-        android:alpha="0"
-        android:layout_above="@+id/iselLab"
-        android:layout_marginBottom="50dp"
-        android:layout_alignLeft="@+id/title" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -112,7 +231,6 @@
         android:textIsSelectable="false" />
 
 
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -133,20 +251,80 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ZEBRO"
-            android:id="@+id/frontTitle"
-            android:textStyle="bold|italic"
-            android:textSize="50dp"
-            android:textColor="#000000"
             android:textAlignment="center"
             android:focusable="false"
             android:layout_alignParentStart="false"
             android:layout_marginTop="35dp"
             android:layout_below="@+id/logo1"
-            android:layout_centerInParent="true" />
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:id="@+id/welcomeTitleLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Z"
+                android:id="@+id/zWelcome"
+                android:textStyle="bold|italic"
+                android:textSize="50dp"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:focusable="false"
+                android:layout_marginTop="35dp"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E"
+                android:id="@+id/eWelcome"
+                android:textStyle="bold|italic"
+                android:textSize="50dp"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:focusable="false"
+                android:layout_marginTop="35dp"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B"
+                android:id="@+id/bWelcome"
+                android:textStyle="bold|italic"
+                android:textSize="50dp"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:focusable="false"
+                android:layout_marginTop="35dp"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R"
+                android:id="@+id/rWelcome"
+                android:textStyle="bold|italic"
+                android:textSize="50dp"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:focusable="false"
+                android:layout_marginTop="35dp"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="O"
+                android:id="@+id/oWelcome"
+                android:textStyle="bold|italic"
+                android:textSize="50dp"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                android:focusable="false"
+                android:layout_marginTop="35dp"
+                android:layout_centerHorizontal="true" />
+        </LinearLayout>
 
     </RelativeLayout>
 
