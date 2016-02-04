@@ -105,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // mMap.addMarker(new MarkerOptions().position(myloc_latlng).title(Caption));
                 Circle circle = mMap.addCircle(new CircleOptions()
                         .center(myloc_latlng)
-                        .radius(2)
+                        .radius(3)
                         .strokeColor(Color.WHITE)
                         .fillColor(Color.parseColor("#448AFF")));
 
