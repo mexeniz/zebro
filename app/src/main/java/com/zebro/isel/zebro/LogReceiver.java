@@ -46,7 +46,7 @@ public class LogReceiver extends Thread {
         try {
             System.out.println ("Attemping to connect to " + IPAddress + ") via UDP port " + targetPort);
             while(true){
-                String message = mode+" REQUEST DATA";
+                String message = String.valueOf(mode);
                 sendData = message.getBytes();
 
                 System.out.println("Send Request " + sendData.length + " bytes Message: " + message);

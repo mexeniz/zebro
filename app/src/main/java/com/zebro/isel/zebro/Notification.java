@@ -65,7 +65,7 @@ public class Notification {
             /*veryNearPlayer = MediaPlayer.create(context,R.raw.nfc_transfer_initiated);
             veryNearPlayer.seekTo(0);
             veryNearPlayer.start();*/
-            previousTrack = soundPool.play(soundPoolMap.get(SOUND_NEAR), streamVolume, streamVolume, 1, 2, 2.0f);
+            previousTrack = soundPool.play(soundPoolMap.get(SOUND_VERY_NEAR), streamVolume, streamVolume, 1, 2, 2.0f);
             Log.i("Notification","Play Very Near sound");
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +77,7 @@ public class Notification {
             /*nearPlayer = MediaPlayer.create(context, R.raw.nfc_initiated);
             nearPlayer.seekTo(0);
             nearPlayer.start();*/
-            previousTrack = soundPool.play(soundPoolMap.get(SOUND_VERY_NEAR), streamVolume, streamVolume, 1, 1, 1.5f);
+            previousTrack = soundPool.play(soundPoolMap.get(SOUND_NEAR), streamVolume, streamVolume, 1, 1, 1.5f);
             Log.i("Notification", "Play Near sound");
         } catch (Exception e) {
             e.printStackTrace();
