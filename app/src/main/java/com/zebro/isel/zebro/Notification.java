@@ -1,6 +1,7 @@
 package com.zebro.isel.zebro;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -17,6 +18,8 @@ import java.util.HashMap;
  * Created by ASUS on 8/1/2559.
  */
 public class Notification {
+    private SharedPreferences settings ;
+
     private Vibrator vibrator;
     private Context context ;
     private Ringtone r ;
@@ -28,14 +31,15 @@ public class Notification {
     private static final int SOUND_VERY_NEAR = 1 ;
     private static final int SOUND_NEAR = 2 ;
 
+
     private void initSounds() {
 
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
+        streamVolume = settings.getInt("notiVolume", audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION));
 
         //AudioAttributes audioAttributes = new AudioAttributes.Builder().setLegacyStreamType(AudioAttributes.USAGE_MEDIA).build();
         //soundPool = new SoundPool.Builder().setAudioAttributes(audioAttributes).build();
-        soundPool = new SoundPool(4, AudioManager.STREAM_NOTIFICATION, 100);
+        soundPool = new SoundPool(4, AudioManager.STREAM_NOTIFICATION, settings.getInt("notiVolume",streamVolume));
 
         soundPoolMap = new HashMap<Integer, Integer>();
 
@@ -49,14 +53,22 @@ public class Notification {
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         /*veryNearPlayer = MediaPlayer.create(context,R.raw.nfc_transfer_initiated);
         nearPlayer = MediaPlayer.create(context, R.raw.nfc_initiated);*/
+
+        settings = context.getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        Log.d("Settings" , "IP "+settings.contains("densoIpAddress"));
+        Log.d("Settings" , "Volume "+settings.contains("notiVolume"));
+        Log.d("Settings", "Vibration " + settings.contains("notiVibration"));
+
         initSounds();
     }
 
     public void vibrate(int duration){
+        if (!settings.getBoolean("notiVibration" , true)) return;
         vibrator.vibrate(duration);
         Log.i("Notification", "Vibrate Duration = " + duration + " ms");
     }
     public void vibratePatternOnce(long[] pattern ){
+        if (!settings.getBoolean("notiVibration" , true)) return;
         vibrator.vibrate(pattern , -1);
         Log.i("Notification", "Pattern");
     }

@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     //DENSO WSU IP Address
     public static final String PREFS_NAME = "MyPrefsFile" ;
+    public SharedPreferences settings ;
     protected String densoIpAddress = "192.168.10.77";
 
     // Fab animation parameter
@@ -114,14 +115,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("densoIpAddress",densoIpAddress);
         startActivityForResult(intent, SET_IP_ADDRESS);
     }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("Result", "Request:" + requestCode + " DATA:" + data.getStringExtra("densoIpAddress"));
-        if (requestCode == SET_IP_ADDRESS) {
-            if (resultCode == RESULT_OK) {
-                densoIpAddress = data.getStringExtra("densoIpAddress") ;
-            }
-        }
-    }
+
     public void startApp(final int mode) {
         Log.i("Main", "Starting App in code" + mode);
         WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
@@ -151,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
 
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                    intent.putExtra("densoIpAddress",densoIpAddress);
+                    intent.putExtra("densoIpAddress",settings.getString("densoIpAddress","192.168.10.77"));
                     //Set mode for LogReceiver
                     intent.setFlags(mode);
 
@@ -376,7 +370,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME , 0);
+        settings = getSharedPreferences(PREFS_NAME , 0);
+
         if(settings.contains("densoIpAddress")){
             densoIpAddress = settings.getString("densoIpAddress" , "192.168.10.77");
         }
@@ -404,11 +399,11 @@ public class MainActivity extends AppCompatActivity {
     public void onStop(){
         super.onStop();
 
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
+        /*SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
         SharedPreferences.Editor editor = settings.edit() ;
         Log.d("Settings","Set Denso IP Address = "+densoIpAddress);
         editor.putString("densoIpAddress" , densoIpAddress);
 
-        editor.commit() ;
+        editor.commit() ;*/
     }
 }

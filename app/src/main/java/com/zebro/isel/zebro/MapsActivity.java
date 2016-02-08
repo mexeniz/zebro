@@ -455,10 +455,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     @Override
     public void onBackPressed(){
-        super.onBackPressed();
         logReceiver.kill();
         //Log.d("DDD","DDD");
-        finish();
+        finishActivity(0);
     }
 
     private class gps_location{

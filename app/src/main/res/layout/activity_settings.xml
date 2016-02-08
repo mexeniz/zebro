@@ -26,7 +26,8 @@
         android:text="DENSO WSU IP Address"
         android:id="@+id/ipSettingText"
         android:layout_below="@+id/closeButton"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -39,4 +40,41 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:editable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volume"
+        android:id="@+id/textView"
+        android:layout_below="@+id/densoIpAddressText"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <SeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/volumeBar"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:max="100"
+        android:progress="0"
+        android:indeterminate="false" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vibSwitch"
+        android:layout_below="@+id/volumeBar"
+        android:layout_alignParentEnd="true"
+        android:checked="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vibration Notification"
+        android:id="@+id/vibText"
+        android:layout_alignTop="@+id/vibSwitch"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:textSize="20dp" />
 </RelativeLayout>
