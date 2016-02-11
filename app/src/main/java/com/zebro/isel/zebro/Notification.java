@@ -9,6 +9,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -28,6 +29,7 @@ public class Notification {
     private AudioManager audioManager;
     private int streamVolume ;
     private int previousTrack = -1 ;
+    private boolean isTestSound = false ;
     private static final int SOUND_VERY_NEAR = 1 ;
     private static final int SOUND_NEAR = 2 ;
 
@@ -58,6 +60,9 @@ public class Notification {
         Log.d("Settings" , "IP "+settings.contains("densoIpAddress"));
         Log.d("Settings" , "Volume "+settings.contains("notiVolume"));
         Log.d("Settings", "Vibration " + settings.contains("notiVibration"));
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        r = RingtoneManager.getRingtone(context, notification);
 
         initSounds();
     }
@@ -91,6 +96,31 @@ public class Notification {
             nearPlayer.start();*/
             previousTrack = soundPool.play(soundPoolMap.get(SOUND_NEAR), streamVolume, streamVolume, 1, 1, 1.5f);
             Log.i("Notification", "Play Near sound");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void playSettingSound(int volume){
+        try {
+            if (isTestSound) return;
+            soundPool.play(soundPoolMap.get(SOUND_NEAR), volume, volume, 1, 1, 1.5f);
+
+            isTestSound = true ;
+
+            CountDownTimer playTimer = new CountDownTimer(500,100){
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    isTestSound = false ;
+                }
+            };
+            playTimer.start();
+
+            Log.i("Notification", "Play Test sound");
         } catch (Exception e) {
             e.printStackTrace();
         }

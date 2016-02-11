@@ -18,10 +18,13 @@ import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private Notification notification;
+
     private EditText densoIpAddressText ;
     private SeekBar volumeBar ;
     private Switch vibSwitch ;
     private SharedPreferences settings;
+
 
     private String densoIpAddress ;
     private int volume ;
@@ -45,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
         settings = getSharedPreferences(MainActivity.PREFS_NAME , 0);
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -89,10 +93,13 @@ public class SettingsActivity extends AppCompatActivity {
                 densoIpAddress = densoIpAddressText.getText().toString();
                 Log.d("Setting", "IP:" + densoIpAddress);
                 saveSettings();
+
             }
         });
 
 
+        final Context context = getApplicationContext();
+        notification = new Notification(context);
 
         volumeBar.setMax(100);
         volumeBar.setProgress(volume);
@@ -102,6 +109,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Log.d("Noti Volume", "value = " + progress);
                 volume = progress ;
                 saveSettings();
+                //notification.playSettingSound(progress);
             }
 
             @Override
@@ -122,6 +130,11 @@ public class SettingsActivity extends AppCompatActivity {
                 vibration = isChecked ;
                 saveSettings();
                 Log.d("Vib Noti" , "Value = " + isChecked);
+
+                if (isChecked) {
+                    notification = new Notification(getApplicationContext());
+                    notification.vibrate(500);
+                }
             }
         });
     }

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -440,24 +441,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         */
     }
     @Override
-    protected void onPause(){
-        super.onPause();
-        //Log.i("PPP", "PPP");
-        //finish();
-        logReceiver.kill();
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        //Log.i("SSS","SSS");
-        logReceiver.kill();
-    }
-    @Override
     public void onBackPressed(){
+        super.onBackPressed();
         logReceiver.kill();
         //Log.d("DDD","DDD");
-        finishActivity(0);
+        /*finishActivity(0);
+        finish();*/
     }
 
     private class gps_location{
