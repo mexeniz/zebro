@@ -248,7 +248,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     .snippet(lat + " " + lng)
                                     //.rotation(deg)
                                     .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_account));
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.vn_walk));
                             mMap.addMarker(marker);
                         } else if (distance <= NEARLIMIT) {
                             //System.out.println("CAUTION : NEAR");
@@ -260,7 +260,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     .snippet(lat + " " + lng)
                                     //.rotation(deg)
                                     .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_account));
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.n_walk));
                             mMap.addMarker(marker);
                         } else {
                             MarkerOptions marker = new MarkerOptions()
@@ -269,7 +269,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     .snippet(lat + " " + lng)
                                     //.rotation(deg)
                                     .anchor(0.5f, 0.5f)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_account));
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.f_walk));
                             mMap.addMarker(marker);
                         }
                     }else if(type == 4) { // HANDICAP
